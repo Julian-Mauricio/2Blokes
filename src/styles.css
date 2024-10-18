@@ -1,3 +1,30 @@
 body {
-  background-color:rgb(27,31,34) !important;
+  background-color: rgb(27, 31, 34) !important;
+  margin: 0; 
+  padding: 0; 
+}
+
+main {
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+  height: 100vh; 
+  flex-direction: column; 
+}
+
+.container {
+  max-width: 1200px; 
+  width: 90%; 
+  padding: 20px; 
+}
+
+@media (max-width: 768px) {
+
+  main {
+    flex-direction: column; 
+  }
+
+  .container {
+    width: 95%;
+  }
 }

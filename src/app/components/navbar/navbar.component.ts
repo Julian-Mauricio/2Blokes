@@ -1,18 +1,17 @@
 import { CommonModule } from '@angular/common';
-import { Component} from '@angular/core';
+import { Component } from '@angular/core';
 import { AppComponent } from '../../app.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
   imports: [CommonModule],
   template: `
-    <nav class="navbar navbar-expand-lg">
+    <nav class="navbar navbar-expand-lg navbar-dark">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#"
-          ><Span style="color:#EC8305" class="me-2">2</Span>BLOKES</a
-        >
-
+        <a class="navbar-brand" href="#"><span style="color:#EC8305" class="me-2">2</span>BLOKES</a>
+        
         <button
           class="navbar-toggler"
           type="button"
@@ -25,32 +24,45 @@ import { AppComponent } from '../../app.component';
           <span class="navbar-toggler-icon"></span>
         </button>
 
-        <form class="d-flex">
-          <ng-container *ngIf="!isLoggedIn; else loggedInTemplate">
-            <button
-              class="btnLogin btn me-3"
-              data-bs-toggle="modal"
-              data-bs-target="#loginModal"
-              type="button"
-              [disabled]="isLoggedIn"
-            >
-              Login
-            </button>
-          </ng-container>
-
-          <ng-template #loggedInTemplate>
-            <h1>hola</h1>
-          </ng-template>
-
-          <button
-            data-bs-toggle="modal"
-            data-bs-target="#registerModal"
-            class="btnRegister btn me-3"
-            type="button"
-          >
-            Sing Up
-          </button>
-        </form>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <form class="d-flex ms-auto">
+            <ng-container *ngIf="!isLoggedIn; else loggedInTemplate">
+              <button
+                class="btnLogin btn me-3"
+                data-bs-toggle="modal"
+                data-bs-target="#loginModal"
+                type="button"
+                [disabled]="isLoggedIn"
+              >
+                Login
+              </button>
+              <button
+                data-bs-toggle="modal"
+                data-bs-target="#registerModal"
+                class="btnRegister btn me-3"
+                type="button"
+              >
+                Sign Up
+              </button>
+            </ng-container>
+            <ng-template #loggedInTemplate>
+              <button
+                type="submit"
+                class="btn btnLogin me-3"
+                (click)="logoutToken()"
+              >
+                Cerrar sesión
+              </button>
+              <button
+                type="submit"
+                class="btn btnRegister me-3"
+                (click)="goToProfile()"
+              >
+                Profile
+              </button>
+            </ng-template>
+          </form>
+        </div>
       </div>
     </nav>
   `,
@@ -62,17 +74,17 @@ import { AppComponent } from '../../app.component';
       color:white;
       font-size:40px;
     }
-    .btnLogin{
+    .btnLogin {
       color:white;
       border:1px solid #EC8305;
       font-weight: bold;
     }
     .btnLogin:hover {
-    color: #EC8300;
-    border:1px solid white;
-    font-weight: bold;
+      color: #EC8300;
+      border:1px solid white;
+      font-weight: bold;
     }
-    .btnRegister{
+    .btnRegister {
       color: #EC8300;
       border:1px solid white;
       font-weight: bold;
@@ -82,18 +94,26 @@ import { AppComponent } from '../../app.component';
       border:1px solid #EC8305;
       font-weight: bold;
     }
-
   `,
 })
 export class NavbarComponent {
   isLoggedIn = false;
 
-  constructor(private appComponent: AppComponent) {}
+  constructor(private appComponent: AppComponent, private router: Router) {}
 
   ngOnInit() {
     this.appComponent.isLoggedIn$.subscribe((status) => {
       this.isLoggedIn = status;
       console.log(this.isLoggedIn);
     });
+  }
+
+  logoutToken() {
+    this.appComponent.logout();
+    this.router.navigate(['']);
+  }
+
+  goToProfile() {
+    this.router.navigate(['/profile']);
   }
 }

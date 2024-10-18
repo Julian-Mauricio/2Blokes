@@ -1,3 +1,4 @@
+import { LoginService } from './../../core/services/logins/login.service';
 import { Component, ElementRef, Renderer2 } from '@angular/core';
 import {
   FormBuilder,
@@ -6,7 +7,6 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { LoginService } from '../../core/services/logins/login.service';
 import { AppComponent } from '../../app.component';
 
 @Component({
@@ -103,7 +103,7 @@ import { AppComponent } from '../../app.component';
         border: 1px solid transparent;
         color: rgb(225, 227, 229);
       }
-
+      
       .formodal {
         background-color: rgb(26, 26, 26);
       }
@@ -170,12 +170,10 @@ export class LoginComponent {
         next: (response) => {
           localStorage.setItem('token', response.token);
           this.appComponent.updateLoginStatus(true);
-          console.log('Token almacenado:', response.token);
           this.loginSuccess = 'Login successful!';
           this.loginError = null; 
           this.loginForm.reset();
           this.modal();
-
           setTimeout(() => {
             this.loginSuccess = null;
           }, 3000);

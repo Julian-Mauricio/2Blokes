@@ -9,7 +9,7 @@ import { catchError } from 'rxjs/operators';
 })
 export class LoginService {
   private apiurlLogin = 'https://prueba.citofoniadosblokes.org/auth/login';
-  private apiurlProfile = 'https://prueba.citofoniadosblokes.org/auth/profile';
+
   constructor(private http: HttpClient) {}
 
   login(user: Login): Observable<any> {
@@ -23,14 +23,6 @@ export class LoginService {
         throw error;
       })
     );
-  }
-
-  profile(): Observable<any> {
-    const headers = new HttpHeaders({
-      'content-Type': 'application/json',
-    });
-
-    return this.http.get<any>(this.apiurlProfile, {headers})
   }
  
 }

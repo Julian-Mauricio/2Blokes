@@ -39,7 +39,7 @@ import { AppComponent } from '../../app.component';
           <div class="modal-body">
             <form [formGroup]="loginForm" (ngSubmit)="loginSubmit()">
               <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Email</label>
+                <label for="exampleInputEmail1" class="form-label"><span><i class="bi bi-envelope me-2"></i></span>Email</label>
                 <input
                   type="email"
                   class="form-control"
@@ -54,7 +54,7 @@ import { AppComponent } from '../../app.component';
                 </div>
               </div>
               <div class="mb-3">
-                <label for="exampleInputPassword1" class="form-label">Password</label>
+                <label for="exampleInputPassword1" class="form-label"><span><i class="bi bi-lock me-2"></i></span>Password</label>
                 <input
                   type="password"
                   class="form-control"

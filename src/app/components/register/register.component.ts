@@ -38,7 +38,7 @@ import { RegisterRequest } from '../../interfaces/register-request';
           <div class="modal-body">
             <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
               <div class="mb-3">
-                <label for="registerInputName" class="form-label">Name</label>
+                <label for="registerInputName" class="form-label"><span><i class="bi bi-person me-2"></i></span>Name</label>
                 <input
                   type="text"
                   class="form-control"
@@ -49,7 +49,7 @@ import { RegisterRequest } from '../../interfaces/register-request';
                 />
               </div>
               <div class="mb-3">
-                <label for="registerInputEmail" class="form-label">Email</label>
+                <label for="registerInputEmail" class="form-label"><span><i class="bi bi-envelope me-2"></i></span>Email</label>
                 <input
                   type="email"
                   class="form-control"
@@ -61,7 +61,7 @@ import { RegisterRequest } from '../../interfaces/register-request';
               </div>
               <div class="mb-3">
                 <label for="registerInputPassword" class="form-label"
-                  >Password</label
+                  ><span><i class="bi bi-lock me-2"></i></span>Password</label
                 >
                 <input
                   type="password"

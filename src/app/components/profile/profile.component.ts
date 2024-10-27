@@ -1,11 +1,12 @@
+import { PatchUserIdService } from './../../core/services/userId/patch-user-id.service';
 import { AppComponent } from './../../app.component';
-import { DeleteProfileService } from './../../core/services/delete-profile.service';
+import { DeleteProfileService } from '../../core/services/userId/delete-profile.service';
 import { ProfileRequest } from './../../interfaces/profile-request';
-import { ProfileService } from './../../core/services/profile.service';
+import { ProfileService } from '../../core/services/userId/profile.service';
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { LoginId } from '../../interfaces/login';
 import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-profile',
@@ -27,13 +28,20 @@ import { Router } from '@angular/router';
           Rol: <span>{{ profile?.role }}</span>
         </li>
       </ul>
-      <div class="card-body bg">
+      <div class="bg card-body">
         <button
           type="button"
-          class="btn btnSeccion w-100"
+          class="btn btnSeccion w-100 mb-4"
           (click)="deleteUser()"
         >
           Eliminar Perfil
+        </button>
+        <button
+          type="button"
+          class="btn btnSeccion w-100 mb-4"
+          (click)="updateUser()"
+        >
+          Actualizar Perfil
         </button>
         <div
           *ngIf="showAlert"
@@ -79,12 +87,14 @@ export class ProfileComponent {
     private profileService: ProfileService,
     private appComponent: AppComponent,
     private deleteProfileService: DeleteProfileService,
+    private updateProfileService: PatchUserIdService,
     private router: Router
   ) {}
 
   ngOnInit(): void {
     this.profileService.profile().subscribe((data) => {
       this.profile = data;
+      localStorage.setItem('userData', JSON.stringify(data));
       console.log(this.profile);
     });
   }
@@ -104,9 +114,25 @@ export class ProfileComponent {
     });
   }
 
+  updateUser(): void{
+    const id = this.profile.id.toString();
+    this.updateProfileService.updates(id).subscribe({
+      next: (response) => {
+        this.alertMessage = response;
+        this.showAlert = true;
+        this.redirectHome();
+      },
+      error: (error) => {
+        this.alertMessage = 'Error al actualizar el perfil.';
+        this.showAlert = true;
+      },
+    })
+  }
+
   redirectHome() {
     setTimeout(() => {
       this.appComponent.updateLoginStatus(false);
+      this.appComponent.logout();
       this.router.navigate(['']);
     }, 2000);
   }

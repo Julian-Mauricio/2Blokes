@@ -23,6 +23,7 @@ export class AppComponent {
   constructor() {}
   logout() {
     localStorage.removeItem('token');
+    localStorage.removeItem('userData');
     this.isLoggedInSubject.next(false);
   }
   hasToken(): boolean {
